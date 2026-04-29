@@ -1,15 +1,16 @@
-# CSC337FinalProject
+# CSC337FinalProject Specs
 Web Programming Project: Multi-Module Web Application
-In this final project, you will design and develop a website inspired by a real-world scenario. This
+<p> In this final project, you will design and develop a website inspired by a real-world scenario. This
 is your opportunity to bring together the web programming skills you've gained throughout the
 semester: including client side scripting, server side scripting, session handling, persistent data
-storage, and user interaction.
-In class, we are working on a basic educational management system with two modules: User
+storage, and user interaction. </p>
+<p> In class, we are working on a basic educational management system with two modules: User
 and Course. For your project, you are expected to build a more comprehensive system
 consisting of at least three modules. One of these will generally be a User module (for login,
 registration, profile, etc.), and you will design at least two additional modules based on your
-chosen theme.
-You may expand on the university management system we explored, or you can choose a
+chosen theme. </p>
+
+<p>  You may expand on the university management system we explored, or you can choose a
 completely different real-life application. Examples include:
 ● An e-commerce platform (e.g., online bookstore, guitar shop, clothing store)
 ● A movie or event booking system
@@ -17,6 +18,8 @@ completely different real-life application. Examples include:
 ● A recipe sharing or blogging platform
 ● A freelance job board or portfolio site
 ● Any idea that reflects a real-life scenario with user interaction and data management
+  </p>
+  <p>
 Project Requirements:
 ● Minimum of three interconnected modules (e.g. users, courses, enrollments). A module
 is a part of the project that has its own database document (MongoDB collection).
@@ -26,11 +29,15 @@ is a part of the project that has its own database document (MongoDB collection)
 ● Logical navigation between pages/modules
 ● A working frontend using HTML, CSS, and JavaScript
 ● A working backend code using the technologies taught in class
+  </p>
+  <p>
 Submission Requirements:
 You will submit two components:
 Project Code (70% points)
 ● Complete source code (frontend and backend codes)
 ● README file with instructions on how to run the project
+      </p>
+      
 Example README file (README.txt):
 Project Name
 This is a Node.js web application built using Express. Follow the
