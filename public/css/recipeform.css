@@ -3,7 +3,7 @@ body {
   font-family: Arial, sans-serif;
   background: #f4f4f4;
   margin: 0;
-  padding: 0;
+  padding: 50px;
 }
 
 .container {
@@ -18,7 +18,8 @@ body {
 
 h1 {
   text-align: center;
-  margin-bottom: 20px;
+  font-size: 50px;
+  margin-bottom: 10px;
 }
 .title-label {
   font-weight: bold;
@@ -43,11 +44,21 @@ input, textarea {
 }
 .ingredients-box{
     width: 20%;
-    height: 500px;
+    height: 300px;
 }
 .instructions-box {
-    width: 15%;
-    height: 700px;
+    width: 50%;
+    height: 300px;
+}
+.image-button {
+  padding: 10px 15px;
+  background: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  width: 10%;
+  font-size: 14px;
+  cursor: pointer;
 }
 .time-row {
   display: flex;

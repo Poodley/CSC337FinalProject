@@ -28,15 +28,18 @@
       <input type="number" name="servings" placeholder="e.g. 4" class="small-input"> 
     </div>
   </div>
-
+  <label for="ingredients" class="ingredients-label">Ingredients</label><br>
   <textarea name="ingredients" placeholder="One ingredient per line" class="ingredients-box"></textarea> <br><br>
-
+  <label for="instructions" class="instructions-label">Instructions</label><br>
   <textarea name="instructions" placeholder="Seperate instructions with a double newline" class="instructions-box"></textarea><br><br>
-
-  <input name="image" placeholder="Image URL"><br><br>
+  <label for="image" class="image-label">Icon URL</label><br>
+  <input id="imageInput" name="image" placeholder="Image URL">
+  <button type="button" onclick="setDefaultImage()" class="image-button">Use Default Image</button>
+  <br><br>
 
   <button type="submit">Create Recipe</button>
 </form>
-
+<a href="/recipes.html">Back to Recipes</a>
+<script src="/js/form.js"></script>
 </body>
 </html>

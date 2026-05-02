@@ -19,15 +19,15 @@ router.post("/create", express.urlencoded({ extended: true }), (req, res) => {
         id: Math.random().toString(36).substring(2, 10)
     };
 
-    fs.appendFileSync("recipes.txt", JSON.stringify(recipe) + "\n");
+    fs.appendFileSync("recipes.json", JSON.stringify(recipe) + "\n");
 
-    res.send("Recipe created");
+    res.redirect("/recipes.html");
 });
 
 
 router.get("/", (req, res) => {
     try {
-        const data = fs.readFileSync("recipes.txt", "utf8");
+        const data = fs.readFileSync("recipes.json", "utf8");
 
         const recipes = data
             .split("\n")
