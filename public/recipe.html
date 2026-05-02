@@ -7,8 +7,19 @@
 
 <div id="recipe"></div>
 
-<script src="/js/recipe.js"></script>
+<div style="margin-top:20px;">
+  <a id="comments-link" href="#">💬 View / Leave Comments</a>
+</div>
 
-</body>
+<br>
 <a href="/recipes.html">Back to Recipes</a>
+
+<script src="/js/recipe.js"></script>
+<script>
+  // set comments link to point to this recipe
+  const p = new URLSearchParams(window.location.search);
+  const rid = p.get("id");
+  if (rid) document.getElementById("comments-link").href = "/comments.html?id=" + rid;
+</script>
+</body>
 </html>
