@@ -15,11 +15,20 @@ async function loadRecipe() {
     }
     const ingredientsList = Array.isArray(recipe.ingredients) ? recipe.ingredients: (recipe.ingredients || "").split(/\r?\n/).map(i => i.trim()).filter(i => i.length > 0);
     const stepsArray = recipe.instructions.split(/\n\s*\n/).map(s => s.trim()).filter(s => s.length > 0);
-    // TODO: make table with prep time, cook time, total time, servings, etc. and make it look nicer
     container.innerHTML = `
+
         <h1>${recipe.title}</h1>
         <img src="${recipe.image}" style="width:300px;">
-
+        <table style="border-collapse: collapse;  border-style: solid; width: 500px; margin-top: 20px;">
+            <tr>
+                <th style="border: 1px solid black;"> <strong>Prep Time:</strong> ${recipe.prepTime} minutes </th>
+                <th style="border: 1px solid black;"><strong>Cook Time:</strong> ${recipe.cookTime} minutes</th>
+            </tr>
+            <tr>
+                <th style="border: 1px solid black;"><strong>Total Time:</strong> ${recipe.totalTime} minutes</th>
+                <th style="border: 1px solid black;"><strong>Servings:</strong> ${recipe.servings}</th>
+            </tr>
+        </table>
         <p><strong>Ingredients:</strong></p>
         <ul>
             ${ingredientsList.map(i => `<li>${i}</li>`).join("")}
