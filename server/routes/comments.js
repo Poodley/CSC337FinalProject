@@ -20,11 +20,14 @@ router.get("/:recipeId", (req, res) => {
     res.json(filtered);
 });
 
-// POST a new comment
+// POST a new comment - pulls username from session
 router.post("/", express.json(), (req, res) => {
-    const { recipeId, username, body, rating } = req.body;
+    const username = req.session.userName;
+    if (!username) return res.status(401).json({ error: "Not logged in" });
 
-    if (!recipeId || !username || !body || !rating) {
+    const { recipeId, body, rating } = req.body;
+
+    if (!recipeId || !body || !rating) {
         return res.status(400).json({ error: "Missing fields" });
     }
 
@@ -46,9 +49,11 @@ router.post("/", express.json(), (req, res) => {
     res.json({ success: true, comment });
 });
 
-// DELETE a comment by id (only if username matches)
+// DELETE - pulls username from session
 router.delete("/:id", express.json(), (req, res) => {
-    const { username } = req.body;
+    const username = req.session.userName;
+    if (!username) return res.status(401).json({ error: "Not logged in" });
+
     const all = readComments();
     const target = all.find(c => c.id === req.params.id);
 
