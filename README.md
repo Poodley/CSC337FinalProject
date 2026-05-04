@@ -9,6 +9,7 @@ Install required packages: <br>
 npm install express <br>
 npm install express-session <br>
 npm install bcrypt <br>
+npm install mongoose <br>
 <br>
 Start the server: <br>
 node server.js <br>
