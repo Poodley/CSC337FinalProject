@@ -27,6 +27,15 @@
       justify-content: flex-end;
       margin-bottom: 20px;
     }
+    .home-btn {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 15px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
     .add-recipe-btn {
       background-color: #28a745;
       color: white;
