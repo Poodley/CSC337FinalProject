@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit Recipe</title>
+  <link rel="stylesheet" href="/css/recipe-edit.css">
+</head>
+<body>
+
+<h1 id="form-title">Edit Recipe</h1>
+
+<form id="recipe-form">
+
+  <label class="title-label">Title</label><br>
+  <input name="title" class="title-box"><br><br>
+
+  <div class="time-row">
+    <div class="field">
+      <label>Prep Time</label>
+      <input type="number" name="prepTime" class="small-input">
+    </div>
+
+    <div class="field">
+      <label>Cook Time</label>
+      <input type="number" name="cookTime" class="small-input">
+    </div>
+
+    <div class="field">
+      <label>Servings</label>
+      <input type="number" name="servings" class="small-input">
+    </div>
+  </div>
+
+  <label>Ingredients</label><br>
+  <textarea name="ingredients" class="ingredients-box"></textarea><br><br>
+
+  <label>Instructions</label><br>
+  <textarea name="instructions" class="instructions-box"></textarea><br><br>
+
+  <label>Image URL</label><br>
+  <input name="image"><br><br>
+
+  <button type="submit" id="submit-btn">Save Changes</button>
+</form>
+
+<a href="/recipes.html">Back to Recipes</a>
+
+<script src="/js/edit-recipe.js"></script>
+</body>
+</html>

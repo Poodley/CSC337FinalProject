@@ -2,24 +2,19 @@
 <html>
 <head>
   <title>Recipe</title>
+  <link rel="stylesheet" href="/css/recipe.css">
 </head>
 <body>
-
+<div class="top-bar">
+  <button onclick="window.location.href='/home.html'">🏠 Home</button>
+  <button onclick="window.location.href='/recipes.html'">🍲 Recipes</button>
+  <button id="edit-btn">✏️ Edit Recipe</button>
+  <button id="comment-btn">💬 Leave Comment</button>
+</div>
+<div>
 <div id="recipe"></div>
-
-<div style="margin-top:20px;">
-  <a id="comments-link" href="#">💬 View / Leave Comments</a>
 </div>
 
-<br>
-<a href="/recipes.html">Back to Recipes</a>
-
 <script src="/js/recipe.js"></script>
-<script>
-  // set comments link to point to this recipe
-  const p = new URLSearchParams(window.location.search);
-  const rid = p.get("id");
-  if (rid) document.getElementById("comments-link").href = "/comments.html?id=" + rid;
-</script>
 </body>
 </html>
