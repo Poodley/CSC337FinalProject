@@ -1,8 +1,17 @@
 const params = new URLSearchParams(window.location.search);
 const recipeId = params.get("id");
 let selectedRating = 0;
+let sessionUser = null;
 
-// show recipe title up top
+// get session username on load
+async function getSession() {
+    const res = await fetch("/api/users/profile");
+    const data = await res.json();
+    if (!data.error) {
+        sessionUser = data.name;
+    }
+}
+
 async function loadRecipeInfo() {
     if (!recipeId) {
         document.getElementById("recipe-info").innerHTML = "<p>No recipe selected.</p>";
@@ -17,7 +26,6 @@ async function loadRecipeInfo() {
     }
 }
 
-// star selector
 document.querySelectorAll(".star").forEach(star => {
     star.addEventListener("click", () => {
         selectedRating = parseInt(star.getAttribute("data-val"));
@@ -25,8 +33,7 @@ document.querySelectorAll(".star").forEach(star => {
         updateStars();
     });
     star.addEventListener("mouseover", () => {
-        const val = parseInt(star.getAttribute("data-val"));
-        highlightStars(val);
+        highlightStars(parseInt(star.getAttribute("data-val")));
     });
     star.addEventListener("mouseout", () => {
         updateStars();
@@ -47,7 +54,6 @@ async function loadComments() {
     if (!recipeId) return;
     const res = await fetch(`/api/comments/${recipeId}`);
     const comments = await res.json();
-
     const list = document.getElementById("comments-list");
 
     if (comments.length === 0) {
@@ -55,7 +61,6 @@ async function loadComments() {
         return;
     }
 
-    // average rating
     const avg = (comments.reduce((sum, c) => sum + c.rating, 0) / comments.length).toFixed(1);
     list.innerHTML = `<p class="avg-rating">Average Rating: <strong>${avg} / 5</strong> (${comments.length} review${comments.length !== 1 ? "s" : ""})</p>`;
 
@@ -64,6 +69,10 @@ async function loadComments() {
         card.className = "comment-card";
         const stars = "★".repeat(c.rating) + "☆".repeat(5 - c.rating);
         const date = new Date(c.timestamp).toLocaleDateString();
+        // only show delete btn if its your comment
+        const deleteBtn = sessionUser && sessionUser === c.username
+            ? `<button class="delete-btn" onclick="deleteComment('${c.id}')">Delete</button>`
+            : "";
         card.innerHTML = `
             <div class="comment-header">
                 <span class="comment-user">${c.username}</span>
@@ -71,19 +80,24 @@ async function loadComments() {
                 <span class="comment-date">${date}</span>
             </div>
             <div class="comment-body">${c.body}</div>
-            <button class="delete-btn" onclick="deleteComment('${c.id}')">Delete</button>
+            ${deleteBtn}
         `;
         list.appendChild(card);
     });
 }
 
 async function submitComment() {
-    const username = document.getElementById("username-input").value.trim();
-    const body = document.getElementById("comment-body").value.trim();
-    const rating = selectedRating;
     const msg = document.getElementById("form-msg");
 
-    if (!username || !body || rating === 0) {
+    if (!sessionUser) {
+        msg.textContent = "You must be logged in to leave a comment.";
+        return;
+    }
+
+    const body = document.getElementById("comment-body").value.trim();
+    const rating = selectedRating;
+
+    if (!body || rating === 0) {
         msg.textContent = "Fill in all fields and select a rating.";
         return;
     }
@@ -91,13 +105,12 @@ async function submitComment() {
     const res = await fetch("/api/comments", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ recipeId, username, body, rating })
+        body: JSON.stringify({ recipeId, body, rating })
     });
 
     const data = await res.json();
     if (data.success) {
         msg.textContent = "";
-        document.getElementById("username-input").value = "";
         document.getElementById("comment-body").value = "";
         selectedRating = 0;
         updateStars();
@@ -108,13 +121,9 @@ async function submitComment() {
 }
 
 async function deleteComment(id) {
-    const username = prompt("Enter your username to delete this comment:");
-    if (!username) return;
-
     const res = await fetch(`/api/comments/${id}`, {
         method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username })
+        headers: { "Content-Type": "application/json" }
     });
 
     const data = await res.json();
@@ -124,6 +133,16 @@ async function deleteComment(id) {
         alert(data.error || "Could not delete.");
     }
 }
+
+// init
+getSession().then(() => {
+    // show logged in user name or login prompt
+    if (sessionUser) {
+        document.getElementById("username-display").textContent = `Commenting as: ${sessionUser}`;
+    } else {
+        document.getElementById("username-display").textContent = "Login to leave a comment.";
+    }
+});
 
 loadRecipeInfo();
 loadComments();
