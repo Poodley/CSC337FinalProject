@@ -2,48 +2,62 @@
 <html>
 <head>
   <title>Edit Recipe</title>
-  <link rel="stylesheet" href="/css/recipe-edit.css">
+  <link rel="stylesheet" href="/css/recipeform.css">
 </head>
+
 <body>
 
-<h1 id="form-title">Edit Recipe</h1>
+<div class="form-container">
 
-<form id="recipe-form">
+  <h1 id="form-title">Edit Recipe</h1>
 
-  <label class="title-label">Title</label><br>
-  <input name="title" class="title-box"><br><br>
+  <form id="recipe-form">
+    <div class="section">
+      <label>Title</label>
+      <input name="title">
+    </div>
+    <div class="section">
+      <label>Times</label>
 
-  <div class="time-row">
-    <div class="field">
-      <label>Prep Time</label>
-      <input type="number" name="prepTime" class="small-input">
+      <div class="time-row">
+        <div class="field">
+          <label>⏱Prep Time</label>
+          <input type="number" name="prepTime" class="small-input">
+        </div>
+
+        <div class="field">
+          <label>🔥Cook Time</label>
+          <input type="number" name="cookTime" class="small-input">
+        </div>
+
+        <div class="field">
+          <label>🍽 Servings</label>
+          <input type="number" name="servings" class="small-input">
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <label>🍅 Ingredients</label>
+      <textarea name="ingredients"></textarea>
     </div>
 
-    <div class="field">
-      <label>Cook Time</label>
-      <input type="number" name="cookTime" class="small-input">
+    <div class="section">
+      <label>👨‍🍳 Instructions</label>
+      <textarea name="instructions"></textarea>
     </div>
-
-    <div class="field">
-      <label>Servings</label>
-      <input type="number" name="servings" class="small-input">
+    <div class="section">
+      <label>🖼️ Icon URL</label>
+      <input name="image">
     </div>
-  </div>
+    <button type="submit" id="submit-btn">Save Changes</button>
 
-  <label>Ingredients</label><br>
-  <textarea name="ingredients" class="ingredients-box"></textarea><br><br>
+  </form>
 
-  <label>Instructions</label><br>
-  <textarea name="instructions" class="instructions-box"></textarea><br><br>
+  <a href="/recipes.html">Back to Recipes</a>
 
-  <label>Image URL</label><br>
-  <input name="image"><br><br>
-
-  <button type="submit" id="submit-btn">Save Changes</button>
-</form>
-
-<a href="/recipes.html">Back to Recipes</a>
+</div>
 
 <script src="/js/edit-recipe.js"></script>
+
 </body>
 </html>

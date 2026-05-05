@@ -4,6 +4,9 @@ async function loadRecipe() {
 
     const res = await fetch(`/api/recipes/${id}`);
     const recipe = await res.json();
+    
+    const favRes = await fetch("/api/favorites");
+    const favorites = await favRes.json();
 
     const container = document.getElementById("recipe");
 
@@ -11,9 +14,10 @@ async function loadRecipe() {
         container.innerHTML = "Recipe not found";
         return;
     }
-
-    const currentUser = window.currentUser || null;
-
+    console.log(favorites);
+    const favoriteIds = favorites.map(f => typeof f === "string" ? f : f._id);
+    const isFavorited = favoriteIds.includes(recipe._id);
+    const heart = isFavorited ? "❤️" : "🤍";
     const ingredientsList = recipe.ingredients || [];
 
     const stepsArray = recipe.instructions
@@ -21,41 +25,40 @@ async function loadRecipe() {
         : [];
 
     container.innerHTML = `
-        <h1>${recipe.title}</h1>
+        <div class="recipe-card">
+            <div class="title-row">
+            <h1>${recipe.title}</h1>
 
-        <img src="${recipe.image}" style="width:300px;">
+            <button class="fav-btn" data-id="${recipe._id}">Favorite ${heart}</button> </div>
 
-        <table style="border-collapse: collapse; border: 1px solid black; width: 500px; margin-top: 20px;">
-            <tr>
-                <th>Prep Time: ${recipe.prepTime} minutes</th>
-                <th>Cook Time: ${recipe.cookTime} minutes</th>
-            </tr>
-            <tr>
-                <th>Total Time: ${recipe.totalTime} minutes</th>
-                <th>Servings: ${recipe.servings}</th>
-            </tr>
-        </table>
+            <img src="${recipe.image}" class="recipe-image">
 
-        <p><strong>Ingredients:</strong></p>
-        <ul>
-            ${ingredientsList.map(i => `<li>${i}</li>`).join("")}
-        </ul>
+            <div class="info-grid">
+                <div>⏱ Prep: ${recipe.prepTime} min</div>
+                <div>🔥 Cook: ${recipe.cookTime} min</div>
+                <div>⏳ Total: ${recipe.totalTime} min</div>
+                <div>🍽 Servings: ${recipe.servings}</div>
+            </div>
 
-        <p><strong>Instructions:</strong></p>
-        <ol style="list-style-type:none; padding-left:0;">
-            ${stepsArray.map((step, i) => `<li>Step ${i + 1}: ${step}</li>`).join("")}
-        </ol>
+            <div class="section">
+                <h3>🍅 Ingredients</h3>
+                <ul>
+                    ${ingredientsList.map(i => `<li>${i}</li>`).join("")}
+                </ul>
+            </div>
 
-        <p><em>by ${recipe.username}</em></p>
+            <div class="section">
+                <h3>👨‍🍳 Instructions</h3>
+                <ol>
+                    ${stepsArray.map(step => `<li>${step}</li>`).join("")}
+                </ol>
+            </div>
+
+            <p class="author">by ${recipe.username}</p>
+
+        </div>
     `;
 
-    // 🔐 fix owner check
-    if (currentUser && recipe.username !== currentUser) {
-        const editBtn = document.getElementById("edit-btn");
-        if (editBtn) editBtn.style.display = "none";
-    }
-
-    // buttons
     if (id) {
         document.getElementById("edit-btn").onclick = () => {
             window.location.href = `/edit-recipe.html?id=${id}`;
@@ -66,7 +69,27 @@ async function loadRecipe() {
         };
     }
 }
+document.addEventListener("click", async (e) => {
+    if (e.target.classList.contains("fav-btn")) {
+        const id = e.target.dataset.id;
 
+        const res = await fetch(`/api/favorites/${id}`, {
+            method: "POST"
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+            const updatedFavorites = data.favorites;
+
+            const isFavorited = updatedFavorites.includes(id);
+
+            e.target.textContent = isFavorited ? "Favorite ❤️" : "Favorite 🤍";
+        } else {
+            alert(data.error || "Failed");
+        }
+    }
+});
 if (window.location.pathname.includes("recipe.html")) {
     loadRecipe();
 }

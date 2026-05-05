@@ -7,6 +7,17 @@ router.post("/create", async (req, res) => {
   try {
     const prepTime = Number(req.body.prepTime) || 0;
     const cookTime = Number(req.body.cookTime) || 0;
+    let ingredients = req.body.ingredients;
+
+    if (typeof ingredients === "string") {
+        ingredients = ingredients.split("\n");
+    }
+
+    if (!Array.isArray(ingredients)) {
+        ingredients = [];
+    }
+
+    ingredients = ingredients.map(i => i.trim()).filter(Boolean);
 
     const recipe = new Recipe({
       title: req.body.title,
@@ -14,7 +25,7 @@ router.post("/create", async (req, res) => {
       cookTime,
       totalTime: prepTime + cookTime,
       servings: req.body.servings,
-      ingredients: req.body.ingredients? req.body.ingredients.split("\n").map(i => i.trim()).filter(Boolean): [],
+      ingredients: ingredients,
       instructions: req.body.instructions,
       image: req.body.image || "https://png.pngtree.com/png-vector/20260114/ourlarge/pngtree-chef-hat-in-cartoon-style-isolated-vector-png-image_18494610.webp",
       username: req.session?.userName || "anonymous"
@@ -41,20 +52,25 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
-  try {
-    const recipe = await Recipe.findById(req.params.id);
+    try {
+        const { id } = req.params;
 
-    if (!recipe) {
-      return res.status(404).json({ error: "Recipe not found" });
+        if (!id || id === "undefined") {
+            return res.status(400).json({ error: "Invalid recipe id" });
+        }
+
+        const recipe = await Recipe.findById(id);
+
+        if (!recipe) {
+            return res.status(404).json({ error: "Recipe not found" });
+        }
+
+        res.json(recipe);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Failed to fetch recipe" });
     }
-
-    res.json(recipe);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Failed to fetch recipe" });
-  }
 });
-
 
 router.put("/:id", async (req, res) => {
   try {
@@ -63,8 +79,21 @@ router.put("/:id", async (req, res) => {
     return res.status(404).json({ error: "Recipe not found" });
     }
     if (recipe.username !== req.session?.userName) {
+    
     return res.status(403).json({ error: "Not allowed to edit this recipe" });
     }
+    let ingredients = req.body.ingredients;
+
+    if (typeof ingredients === "string") {
+        ingredients = ingredients.split("\n");
+    }
+
+    if (!Array.isArray(ingredients)) {
+        ingredients = [];
+    }
+
+    ingredients = ingredients.map(i => i.trim()).filter(Boolean);
+
     const prepTime = Number(req.body.prepTime) || 0;
     const cookTime = Number(req.body.cookTime) || 0;
 
@@ -73,7 +102,7 @@ router.put("/:id", async (req, res) => {
         recipe.cookTime = cookTime;
         recipe.totalTime = prepTime + cookTime;
         recipe.servings = req.body.servings;
-        recipe.ingredients = req.body.ingredients.split("\n").map(i => i.trim()).filter(Boolean);
+        recipe.ingredients = ingredients;
         recipe.instructions = req.body.instructions;
         recipe.image = req.body.image;
 
@@ -102,6 +131,5 @@ router.delete("/:id", async (req, res) => {
 
     res.json({ success: true });
 });
-
 
 module.exports = router;

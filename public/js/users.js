@@ -45,6 +45,34 @@ async function logout() {
     window.location.href = "/login.html"
 }
 
+async function loadFavorites() {
+  const favorites = await fetch("/api/favorites").then(r => r.json());
+    console.log(favorites)
+  const container = document.getElementById("favorites-list");
+  container.innerHTML = "";
 
+  if (!favorites.length) {
+    container.innerHTML = "<p>No favorites yet</p>";
+    return;
+  }
+
+  favorites.forEach(recipe => {
+    const card = document.createElement("div");
+    card.className = "favorite-card";
+    console.log(recipe)
+    card.innerHTML = `
+      <img src="${recipe.image}">
+      <div>${recipe.title}</div>
+    `;
+
+    card.onclick = () => {
+      window.location.href = `/recipe.html?id=${recipe._id}`;
+    };
+
+    container.appendChild(card);
+  });
+}
+
+loadFavorites();
 
 

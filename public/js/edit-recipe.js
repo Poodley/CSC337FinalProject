@@ -6,7 +6,6 @@ if (!id) {
     window.location.href = "/recipes.html";
 }
 
-// 1. Load recipe into form
 async function loadRecipe() {
     const res = await fetch(`/api/recipes/${id}`);
     const recipe = await res.json();
@@ -34,7 +33,6 @@ async function loadRecipe() {
 loadRecipe();
 
 
-// 2. Submit updated recipe
 document.getElementById("recipe-form").addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -59,6 +57,8 @@ document.getElementById("recipe-form").addEventListener("submit", async (e) => {
     if (res.ok) {
         window.location.href = `/recipe.html?id=${id}`;
     } else {
-        alert("Failed to update recipe");
+        const errorData = await res.json();
+        alert(errorData.error || "Failed to update recipe");
+        return;
     }
 });63

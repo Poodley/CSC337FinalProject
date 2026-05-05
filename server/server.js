@@ -19,6 +19,7 @@ app.use(session({
 app.use('/api/users', require('./routes/userRoutes.js'));
 app.use("/api/recipes", require("./routes/recipes.js"));
 app.use("/api/comments", require("./routes/comments.js"));
+app.use("/api/favorites", require("./routes/favorites.js"))
 app.get("/", (req, res) => { res.sendFile(path.join(__dirname, "../public", "recipes.html")); });
 app.listen(8080, () => {
   console.log("Server running on http://localhost:8080");

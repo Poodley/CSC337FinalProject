@@ -9,8 +9,9 @@
 <div class="top-bar">
     <button class="logout-btn" onclick="logout()"> Log Out </button>
 </div>
-
-    <h1> Explore Recipe World </h1>
+<div class="home-layout">
+  <div class="main-content">
+    <h1> Explore Recipe World 🔎 </h1>
     <div class="Welcome">
         <p>Welcome, <strong id="user-name"></strong>!</p>
 
@@ -21,6 +22,11 @@
          <button class="nav-btn" onclick="window.location.href='/suggestions.html'"> Suggestions</button>-->
     </div>
 
+    </div>
+      <div class="sidebar">
+    <h2>❤️ Your Favorites</h2>
+    <div id="favorites-list"></div>
+    </div></div>
     <script src="/js/users.js"></script>
     <script> 
         fetch('/api/users/profile')
