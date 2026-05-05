@@ -3,7 +3,6 @@ const recipeId = params.get("id");
 let selectedRating = 0;
 let sessionUser = null;
 
-// get session username on load
 async function getSession() {
     const res = await fetch("/api/users/profile");
     const data = await res.json();
@@ -19,7 +18,7 @@ async function loadRecipeInfo() {
     }
     const res = await fetch("/api/recipes");
     const data = await res.json();
-    const recipe = data.find(r => String(r.id) === String(recipeId));
+    const recipe = data.find(r => String(r._id) === String(recipeId));
     if (recipe) {
         document.getElementById("recipe-info").innerHTML =
             `<h2 style="text-align:center;">Recipe: <a href="/recipe.html?id=${recipeId}">${recipe.title}</a></h2>`;
@@ -29,7 +28,6 @@ async function loadRecipeInfo() {
 document.querySelectorAll(".star").forEach(star => {
     star.addEventListener("click", () => {
         selectedRating = parseInt(star.getAttribute("data-val"));
-        document.getElementById("rating-val").value = selectedRating;
         updateStars();
     });
     star.addEventListener("mouseover", () => {
@@ -56,7 +54,7 @@ async function loadComments() {
     const comments = await res.json();
     const list = document.getElementById("comments-list");
 
-    if (comments.length === 0) {
+    if (!comments.length) {
         list.innerHTML = "<p style='text-align:center;color:#888;'>No reviews yet. Be the first!</p>";
         return;
     }
@@ -64,14 +62,13 @@ async function loadComments() {
     const avg = (comments.reduce((sum, c) => sum + c.rating, 0) / comments.length).toFixed(1);
     list.innerHTML = `<p class="avg-rating">Average Rating: <strong>${avg} / 5</strong> (${comments.length} review${comments.length !== 1 ? "s" : ""})</p>`;
 
-    comments.slice().reverse().forEach(c => {
+    comments.forEach(c => {
         const card = document.createElement("div");
         card.className = "comment-card";
         const stars = "★".repeat(c.rating) + "☆".repeat(5 - c.rating);
-        const date = new Date(c.timestamp).toLocaleDateString();
-        // only show delete btn if its your comment
+        const date = new Date(c.createdAt).toLocaleDateString();
         const deleteBtn = sessionUser && sessionUser === c.username
-            ? `<button class="delete-btn" onclick="deleteComment('${c.id}')">Delete</button>`
+            ? `<button class="delete-btn" onclick="deleteComment('${c._id}')">Delete</button>`
             : "";
         card.innerHTML = `
             <div class="comment-header">
@@ -95,9 +92,7 @@ async function submitComment() {
     }
 
     const body = document.getElementById("comment-body").value.trim();
-    const rating = selectedRating;
-
-    if (!body || rating === 0) {
+    if (!body || selectedRating === 0) {
         msg.textContent = "Fill in all fields and select a rating.";
         return;
     }
@@ -105,7 +100,7 @@ async function submitComment() {
     const res = await fetch("/api/comments", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ recipeId, body, rating })
+        body: JSON.stringify({ recipeId, body, rating: selectedRating })
     });
 
     const data = await res.json();
@@ -116,7 +111,7 @@ async function submitComment() {
         updateStars();
         loadComments();
     } else {
-        msg.textContent = data.error || "Error submitting comment.";
+        msg.textContent = data.error || "Error submitting.";
     }
 }
 
@@ -134,13 +129,10 @@ async function deleteComment(id) {
     }
 }
 
-// init
 getSession().then(() => {
-    // show logged in user name or login prompt
-    if (sessionUser) {
-        document.getElementById("username-display").textContent = `Commenting as: ${sessionUser}`;
-    } else {
-        document.getElementById("username-display").textContent = "Login to leave a comment.";
+    const display = document.getElementById("username-display");
+    if (display) {
+        display.textContent = sessionUser ? `Commenting as: ${sessionUser}` : "Login to leave a comment.";
     }
 });
 
