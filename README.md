@@ -28,46 +28,47 @@ node server/demoRecipes.js
 
 ```
 CSC337FinalProject/
-├── server/
-│ ├── routes/
-│ │ ├── recipes.js
-│ │ ├── user.js
-│ │ ├── comments.js
-│ │ ├── recipe.js
-│ │ ├── userRoutes.js
-│ │ └── favorites.js
-│ ├── comments.json
-│ ├── demoRecipes.js
-│ └── server.js
+├── server/              # Main server, routes and backend
+│ ├── routes/            # routes
+│ │ ├── recipes.js       # backend for recipes
+│ │ ├── comments.js      # backend for comments
+│ │ ├── userRoutes.js    # backend for user
+│ │ └── favorites.js     # backed for favoriting
+│ ├── models/            # contains mongoDB structures
+│ │ ├── user.js          # mongoDB user structure
+│ │ └── recipe.js        # mongoDB recipe structure
+│ ├── comments.json      # storage for comments
+│ ├── demoRecipes.js     # file to load recipes
+│ └── server.js          # server to run
 │
-├── public/
-│ ├── css/
-│ │ ├── recipes.css
-│ │ ├── recipe.css
-│ │ ├── recipeform.css
-│ │ ├── users.css
-│ │ ├── comments.css
-│ │ ├── login.css
-│ │ └── register.css
+├── public/              # front end
+│ ├── css/               # css styling
+│ │ ├── recipes.css      # styling for recipes.html
+│ │ ├── recipe.css       # styling for recipe.html
+│ │ ├── recipeform.css   # styling for create-recipe.html
+│ │ ├── users.css        # styling for home.html
+│ │ ├── comments.css     # styling for comments.html
+│ │ ├── login.css        # styling for login.html
+│ │ └── register.css     # styling for register.html
 │ │
-│ ├── js/
-│ │ ├── recipes.js
-│ │ ├── recipe.js
-│ │ ├── comments.js
-│ │ ├── form.js
-│ │ ├── edit-recipe.js
-│ │ └── users.js
+│ ├── js/                # javascript files
+│ │ ├── recipes.js       # javascript for recipes.html
+│ │ ├── recipe.js        # javascript for recipe.html
+│ │ ├── comments.js      # javascript for comments.html
+│ │ ├── form.js          # javascript for create-recipe.html
+│ │ ├── edit-recipe.js   # javascript for edit-recipe.html
+│ │ └── users.js         # javascript for login,register and home html files
 │ │
-│ ├── recipes.html
-│ ├── recipe.html
-│ ├── create-recipe.html
-│ ├── edit-recipe.html
-│ ├── login.html
-│ ├── home.html
-│ ├── comments.html
-│ └── register.html
-├── .gitignore
-├── report.pdf
-├── Project Description.pdf
-└── README.md
+│ ├── recipes.html       # webpage for browsing recipes
+│ ├── recipe.html        # webpage for single recipes
+│ ├── create-recipe.html # webpage for add recipes
+│ ├── edit-recipe.html   # webpage for editing recipes
+│ ├── login.html         # webpage for user login
+│ ├── home.html          # webpage for home
+│ ├── comments.html      # webpage for viewing/adding/deleting comments
+│ └── register.html      # webpage for user registering
+├── .gitignore           # ignore for github
+├── report.pdf           # Report for project
+├── Project Description.pdf # project specs
+└── README.md            # README file containing a description of the project
 ```
