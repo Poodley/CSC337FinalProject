@@ -14,10 +14,12 @@ async function loadRecipe() {
         container.innerHTML = "Recipe not found";
         return;
     }
-    console.log(favorites);
+    let heart;
+    if (!favorites){
     const favoriteIds = favorites.map(f => typeof f === "string" ? f : f._id);
     const isFavorited = favoriteIds.includes(recipe._id);
-    const heart = isFavorited ? "❤️" : "🤍";
+    heart = isFavorited ? "❤️" : "🤍";}
+    else {heart ="🤍"; }
     const ingredientsList = recipe.ingredients || [];
 
     const stepsArray = recipe.instructions
