@@ -17,7 +17,8 @@ npm install mongoose
 Start the server: <br>
 ```
 node server/server.js
-The application will run at http://localhost:8080/
+Server running on http://localhost:8080/
+MongoDB connected
 ```
 To load demo recipes while the server is running:
 ```
