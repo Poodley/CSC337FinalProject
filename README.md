@@ -1,9 +1,9 @@
 # CSC337FinalProject Specs
 Web Programming Project: Multi-Module Web Application
 <p>  
-Sample README file (README.txt): <br>
-Recipe Platform <br>
-This is a Node.js web application built using Express. <br>
+
+Recipe World <br>
+<p> This is a Node.js web application built using Express and MongoDB that simulates a real-world recipe blogging platform. </p> <br>
 Follow the steps below to install dependencies and run the project. <br>
 Install required packages: <br>
 npm install express <br>
@@ -12,6 +12,54 @@ npm install bcrypt <br>
 npm install mongoose <br>
 <br>
 Start the server: <br>
-node server.js <br>
+node server/server.js <br>
 The application will run at http://localhost:8080/ <br>
+To load demo recipes while the server is running: <br>
+node server/demoRecipes.js <br>
 </p>    
+## Project Structure
+```
+CSC337FinalProject/
+├── server/
+│ ├── routes/
+│ │ ├── recipes.js
+│ │ ├── user.js
+│ │ ├── comments.js
+│ │ ├── recipe.js
+│ │ ├── userRoutes.js
+│ │ └── favorites.js
+│ ├── comments.json
+│ ├── demoRecipes.js
+│ └── server.js
+│
+├── public/
+│ ├── css/
+│ │ ├── recipes.css
+│ │ ├── recipe.css
+│ │ ├── recipeform.css
+│ │ ├── users.css
+│ │ ├── comments.css
+│ │ ├── login.css
+│ │ └── register.css
+│ │
+│ ├── js/
+│ │ ├── recipes.js
+│ │ ├── recipe.js
+│ │ ├── comments.js
+│ │ ├── form.js
+│ │ ├── edit-recipe.js
+│ │ └── users.js
+│ │
+│ ├── recipes.html
+│ ├── recipe.html
+│ ├── create-recipe.html
+│ ├── edit-recipe.html
+│ ├── login.html
+│ ├── home.html
+│ ├── comments.html
+│ └── register.html
+├── .gitignore
+├── report.pdf
+├── Project Description.pdf
+└── README.md
+```
