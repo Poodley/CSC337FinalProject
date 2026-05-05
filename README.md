@@ -4,7 +4,7 @@ Web Programming Project: Multi-Module Web Application
 
 Recipe World <br>
 <p> This is a Node.js web application built using Express and MongoDB that simulates a real-world recipe blogging platform. </p> 
-Follow the steps below to install dependencies and run the project. <br>
+<p>Follow the steps below to install dependencies and run the project. Must have MongoDB Server and NodeJS installed</p>
 Install required packages: <br>
 
 ```
@@ -35,9 +35,9 @@ CSC337FinalProject/
 │ │ ├── userRoutes.js    # backend for user
 │ │ └── favorites.js     # backed for favoriting
 │ ├── models/            # contains mongoDB structures
+│ │ ├── comments.js      # mongoDB comment structure
 │ │ ├── user.js          # mongoDB user structure
 │ │ └── recipe.js        # mongoDB recipe structure
-│ ├── comments.json      # storage for comments
 │ ├── demoRecipes.js     # file to load recipes
 │ └── server.js          # server to run
 │
