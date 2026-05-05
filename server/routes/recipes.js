@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Recipe = require("./recipe.js");
+const Recipe = require("../models/recipe.js");
 
 
 router.post("/create", async (req, res) => {

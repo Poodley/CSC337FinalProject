@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Recipe = require("./routes/recipe.js");
+const Recipe = require("./models/recipe.js");
 
 mongoose.connect("mongodb://localhost:27017/recipeapp");
 

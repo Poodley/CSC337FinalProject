@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const User = require("./user.js");
-const Recipe = require("./recipe.js");
+const User = require("../models/user.js");
+const Recipe = require("../models/recipe.js");
 // toggle favorite
 router.post("/:recipeId", async (req, res) => {
     const userId = req.session.userId;
